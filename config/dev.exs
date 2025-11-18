@@ -3,9 +3,9 @@ import Config
 # Configure your database
 config :locacao_api, LocacaoApi.Repo,
   username: "root",
-  password: "",
+  password: "root",
   hostname: "localhost",
-  database: "locacao_api_dev",
+  database: "locacao_midias",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
