@@ -25,7 +25,8 @@
 /frontend/*.tsbuildinfo
 /frontend/*.local
 
-
+/frontend/.vite/
+/frontend/chunk-*
 
 # Backend ELIXIR, PHOENIX and MIX
 
@@ -50,3 +51,5 @@
 
 # Local
 /backend/db.sqlite3
+
+
