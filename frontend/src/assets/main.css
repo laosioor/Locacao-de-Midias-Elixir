@@ -1,0 +1,437 @@
+/* Autores: Aloísio & Clarisse */
+
+:root {
+	/* Rosé Pine Dawn, ou seja, o TEMA CLARO */
+	--rp-base: rgb(250, 244, 237);
+	--rp-surface: rgb(255, 250, 243);
+	--rp-overlay: rgb(242, 233, 222);
+	--rp-muted: rgb(152, 147, 165);
+	--rp-subtle: rgb(121, 117, 147);
+	--rp-text: rgb(87, 82, 121);
+	--rp-love: rgb(180, 99, 122);
+	--rp-gold: rgb(234, 157, 52);
+	--rp-rose: rgb(215, 130, 126);
+	--rp-pine: rgb(40, 105, 131);
+	--rp-foam: rgb(86, 148, 159);
+	--rp-iris: rgb(144, 122, 169);
+	--rp-highlight-low: rgb(244, 237, 232);
+	--rp-highlight-med: rgb(223, 218, 217);
+	--rp-highlight-high: rgb(206, 202, 205);
+	--rp-input-text: rgb(224, 222, 244);
+	--rp-input-bg: rgb(38, 35, 58);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		/* Rosé Pine, aqui é o TEMA ESCURO */
+		--rp-base: rgb(25, 23, 36);
+		--rp-surface: rgb(31, 29, 46);
+		--rp-overlay: rgb(38, 35, 58);
+		--rp-muted: rgb(110, 106, 134);
+		--rp-subtle: rgb(144, 140, 170);
+		--rp-text: rgb(224, 222, 244);
+		--rp-love: rgb(235, 111, 146);
+		--rp-gold: rgb(246, 193, 119);
+		--rp-rose: rgb(235, 188, 186);
+		--rp-pine: rgb(49, 116, 143);
+		--rp-foam: rgb(156, 207, 216);
+		--rp-iris: rgb(196, 167, 231);
+		--rp-highlight-low: rgb(33, 32, 46);
+		--rp-highlight-med: rgb(64, 61, 82);
+		--rp-highlight-high: rgb(82, 79, 103);
+		--rp-input-text: rgb(87, 82, 121);
+		--rp-input-bg: rgb(242, 233, 222);
+	}
+}
+
+html {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+body {
+	display: flex;
+	height: 100%;
+	margin: 0;
+}
+
+div#app {
+	width: 100%;
+}
+
+main {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	background-color: var(--rp-base);
+	color: var(--rp-text);
+	display: flex;
+	height: 100%;
+	margin: 0;
+}
+
+aside {
+	background-color: var(--rp-surface);
+	width: 280px;
+	flex-shrink: 0;
+	padding: 20px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+h1,
+h2 {
+	font-family: Gotham, sans-serif;
+}
+
+h1 {
+	font-weight: bold;
+	line-height: 1;
+	font-size: 3rem;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+h1 > a {
+	color: var(--rp-text);
+}
+
+a {
+	font-family: "Montserrat", sans-serif;
+	text-decoration: none;
+	color: var(--rp-iris);
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+hr {
+	height: 5px;
+	margin: 3px 0 25px 0;
+	background-color: var(--rp-love);
+	border: none;
+}
+
+aside li {
+	list-style: none;
+	font-size: 1.1rem;
+	margin-bottom: 1vh;
+	border-radius: 5px;
+}
+
+aside h1 a {
+	display: inline-block;
+	transition: all 0.3s ease-in-out;
+	font-size: 3rem;
+}
+
+aside h1 a:hover {
+	color: var(--rp-iris);
+	text-shadow: 0 0 1px var(--rp-iris);
+	transform: translateY(-2px) scale(1.02);
+}
+
+aside li a {
+	font-size: 22px;
+	padding: 2vh 2vw;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+aside li a img {
+	width: 50px;
+	height: 50px;
+	transition: transform 0.1s ease-in-out;
+}
+
+li:hover {
+	background-color: var(--rp-overlay);
+}
+
+aside li:hover a img,
+aside li.active:hover a img {
+	transform: scale(1.2);
+}
+
+aside li.active {
+	background-color: var(--rp-highlight-med);
+}
+
+aside li.active a {
+	color: var(--rp-iris);
+}
+
+aside li.active a img {
+	transform: scale(1.1);
+}
+
+.content {
+	font-family: "Montserrat", sans-serif;
+	margin: 0;
+	padding: 2% 3%;
+	flex: 1;
+	overflow-y: auto;
+}
+
+.tabela-listagem {
+	width: 100%;
+	background-color: var(--rp-overlay);
+	margin: 20px auto;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 1px solid var(--rp-text);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.tabela-listagem thead th {
+	background-color: var(--rp-highlight-high);
+	color: var(--rp-text);
+	padding: 5px 10px;
+	text-align: center;
+}
+
+.tabela-listagem tbody td {
+	padding: 5px 10px;
+	border-bottom: 1px solid var(--rp-highlight-med);
+	text-align: center;
+}
+
+.tabela-listagem tbody tr:hover {
+	background-color: var(--rp-highlight-low);
+}
+
+.tabela-listagem tbody td a {
+	display: inline-block;
+	padding: 5px 10px;
+	margin: 2px 0;
+	border-radius: 4px;
+	font-size: 0.95rem;
+	font-weight: bold;
+	transition: background-color 0.2s ease;
+	text-decoration: none;
+}
+
+.btn-alterar-form {
+	color: var(--rp-pine);
+	border: 1px solid var(--rp-pine);
+}
+
+.btn-alterar-form:hover {
+	background-color: var(--rp-pine);
+	color: var(--rp-surface);
+}
+
+.btn-excluir-form {
+	color: var(--rp-love);
+	border: 1px solid var(--rp-love);
+}
+
+.btn-excluir-form:hover {
+	background-color: var(--rp-love);
+	color: var(--rp-surface);
+}
+
+.btn-novo {
+	background-color: var(--rp-foam);
+	color: var(--rp-surface);
+	text-decoration: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-weight: bold;
+	transition: all 0.3s ease-in-out;
+	display: inline-block;
+	margin-bottom: 20px;
+	border: none;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-novo:hover {
+	transform: scale(1.1);
+}
+
+main p {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.pagina-formulario {
+	font-family: "Montserrat", sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding-top: 5vh;
+	overflow-y: auto;
+}
+
+.content-form {
+	background-color: var(--rp-surface);
+	padding: 40px;
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	max-width: 500px;
+	width: 100%;
+}
+
+.content-form h1 {
+	text-align: center;
+	margin-bottom: 30px;
+	color: var(--rp-rose);
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: bold;
+	color: var(--rp-subtle);
+}
+
+.form-cadastro input[type="text"],
+.form-cadastro input[type="date"],
+.form-cadastro input[type="number"],
+.form-cadastro select {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 0;
+	border: 1px solid var(--rp-muted);
+	border-radius: 4px;
+	background-color: var(--rp-overlay);
+	color: var(--rp-text);
+	box-sizing: border-box;
+	font-size: 1rem;
+	font-family: "Montserrat", sans-serif;
+}
+
+.form-cadastro input[type="text"]:focus,
+.form-cadastro input[type="date"]:focus,
+.form-cadastro input[type="number"]:focus,
+.form-cadastro select:focus {
+	border-color: var(--rp-iris);
+	outline: none;
+	box-shadow: 0 0 5px rgba(196, 167, 231, 0.5);
+}
+
+/* Isso aqui é pra tirar o caralho das setinhas do input de number em browser que não seja Firefox */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* E isso aqui é pra tirar no Firefox... */
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+.botoes-form {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 20px;
+	margin-top: 10px;
+	border-top: 1px solid var(--rp-highlight-med);
+}
+
+.btn-salvar {
+	background-color: var(--rp-foam);
+	color: var(--rp-surface);
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	font-size: 1rem;
+}
+
+.btn-salvar:hover {
+	transform: scale(1.1);
+}
+
+.btn-voltar {
+	color: var(--rp-muted);
+	text-decoration: none;
+	font-weight: bold;
+	padding: 10px;
+	display: inline-block;
+	transition: color 0.2s ease;
+}
+
+.btn-voltar:hover {
+	color: var(--rp-iris);
+}
+
+.card-exclusao {
+	max-width: 600px;
+}
+
+.card-exclusao h1 {
+	color: var(--rp-love);
+}
+
+.detalhes-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 10px;
+	border-bottom: 1px solid var(--rp-highlight-med);
+	font-size: 1.1rem;
+}
+
+.detalhes-item strong {
+	color: var(--rp-subtle);
+	font-weight: bold;
+}
+
+.detalhes-item span {
+	color: var(--rp-text);
+}
+
+.aviso-exclusao {
+	background-color: rgba(180, 99, 122, 0.1);
+	border: 1px solid var(--rp-love);
+	border-radius: 5px;
+	padding: 10px 20px;
+	margin: 30px 0;
+	text-align: center;
+}
+
+.aviso-exclusao p {
+	margin: 5px 0;
+	color: var(--rp-rose);
+}
+
+.aviso-exclusao p strong {
+	color: var(--rp-text);
+}
+
+.btn-excluir {
+	background-color: var(--rp-love);
+	color: var(--rp-base);
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-size: 1rem;
+}
+
+.btn-excluir:hover {
+	filter: brightness(115%);
+	color: var(--rp-text);
+	transform: translateY(-1px);
+}
