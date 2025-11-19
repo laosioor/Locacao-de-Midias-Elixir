@@ -132,27 +132,27 @@ CREATE TABLE IF NOT EXISTS `locacao_midias`.`midia` (
   `ano_lancamento` INT NOT NULL,
   `codigo_barras` VARCHAR(13) NOT NULL,
   `duracao_em_minutos` INT NOT NULL,
-  `ator_principal_id` INT NOT NULL,
-  `ator_coadjuvante_id` INT NOT NULL,
+  `ator_principal` INT NOT NULL,
+  `ator_coadjuvante` INT NOT NULL,
   `genero_id` INT NOT NULL,
   `classificacao_etaria_id` INT NOT NULL,
   `tipo_id` INT NOT NULL,
   `classificacao_interna_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `codigoBarras_UNIQUE` (`codigo_barras` ASC),
-  INDEX `fk_midia_ator_principal_idx` (`ator_principal_id` ASC),
-  INDEX `fk_midia_ator_coadjuvante_idx` (`ator_coadjuvante_id` ASC),
+  INDEX `fk_midia_ator_principal_idx` (`ator_principal` ASC),
+  INDEX `fk_midia_ator_coadjuvante_idx` (`ator_coadjuvante` ASC),
   INDEX `fk_midia_genero_idx` (`genero_id` ASC),
   INDEX `fk_midia_classificacao_etaria_idx` (`classificacao_etaria_id` ASC),
   INDEX `fk_midia_tipo_idx` (`tipo_id` ASC),
   INDEX `fk_midia_classificacao_interna1_idx` (`classificacao_interna_id` ASC),
   CONSTRAINT `fk_midia_ator_principal`
-    FOREIGN KEY (`ator_principal_id`)
+    FOREIGN KEY (`ator_principal`)
     REFERENCES `locacao_midias`.`ator` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_midia_ator_coadjuvante`
-    FOREIGN KEY (`ator_coadjuvante_id`)
+    FOREIGN KEY (`ator_coadjuvante`)
     REFERENCES `locacao_midias`.`ator` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
@@ -338,8 +338,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `locacao_midias`;
-INSERT INTO `locacao_midias`.`midia` (`id`, `titulo`, `ano_lancamento`, `codigo_barras`, `duracao_em_minutos`, `ator_principal_id`, `ator_coadjuvante_id`, `genero_id`, `classificacao_etaria_id`, `tipo_id`, `classificacao_interna_id`) VALUES (1, 'Harry Potter e a Pedra Filosofal', 2001, '1231231231231', 125, 3, 4, 2, 1, 1, 2);
-INSERT INTO `locacao_midias`.`midia` (`id`, `titulo`, `ano_lancamento`, `codigo_barras`, `duracao_em_minutos`, `ator_principal_id`, `ator_coadjuvante_id`, `genero_id`, `classificacao_etaria_id`, `tipo_id`, `classificacao_interna_id`) VALUES (2, 'Matrix', 1999, '4564564564564', 136, 1, 2, 3, 2, 2, 3);
+INSERT INTO `locacao_midias`.`midia` (`id`, `titulo`, `ano_lancamento`, `codigo_barras`, `duracao_em_minutos`, `ator_principal`, `ator_coadjuvante`, `genero_id`, `classificacao_etaria_id`, `tipo_id`, `classificacao_interna_id`) VALUES (1, 'Harry Potter e a Pedra Filosofal', 2001, '1231231231231', 125, 3, 4, 2, 1, 1, 2);
+INSERT INTO `locacao_midias`.`midia` (`id`, `titulo`, `ano_lancamento`, `codigo_barras`, `duracao_em_minutos`, `ator_principal`, `ator_coadjuvante`, `genero_id`, `classificacao_etaria_id`, `tipo_id`, `classificacao_interna_id`) VALUES (2, 'Matrix', 1999, '4564564564564', 136, 1, 2, 3, 2, 2, 3);
 
 COMMIT;
 

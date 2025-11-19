@@ -30,19 +30,19 @@
 # Backend ELIXIR, PHOENIX and MIX
 
 # Build and compile
-/backend/_build/
-/backend/cover/
+/backend/_build/*
+/backend/cover/*
 
 # Dependency
-/backend/deps/
-/backend/doc/
+/backend/deps/*
+/backend/doc/*
 
 # Config
 /backend/config/dev.secret.exs
 /backend/config/runtime.secret.exs
 
 # Tmp and errors
-/backend/tmp/
+/backend/tmp/*
 /backend/erl_crash.dump
 /backend/.fetch
 /backend/*.ez

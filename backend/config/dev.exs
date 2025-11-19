@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :locacao_api, LocacaoApi.Repo,
-  username: "root",
-  password: "root",
+  username: "rezescarlet",
+  password: "",
   hostname: "localhost",
   database: "locacao_midias",
   stacktrace: true,
