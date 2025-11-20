@@ -18,7 +18,7 @@ defmodule LocacaoApiWeb.GeneroJSON do
   def data(%Genero{} = genero) do
     %{
       id: genero.id,
-      descricao: genero.descricao
+      Descrição: genero.descricao
     }
   end
 end

@@ -18,9 +18,9 @@ defmodule LocacaoApiWeb.AtorJSON do
   def data(%Ator{} = ator) do
     %{
       id: ator.id,
-      nome: ator.nome,
-      sobrenome: ator.sobrenome,
-      data_estreia: ator.data_estreia
+      Nome: ator.nome,
+      Sobrenome: ator.sobrenome,
+      Data_de_Estreia: ator.data_estreia
     }
   end
 end

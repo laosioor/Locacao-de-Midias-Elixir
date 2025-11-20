@@ -19,10 +19,10 @@ defmodule LocacaoApiWeb.LocacaoJSON do
   def data(%Locacao{} = locacao) do
     %{
       id: locacao.id,
-      data_inicio: locacao.data_inicio,
-      data_fim: locacao.data_fim,
-      cancelada: locacao.cancelada,
-      cliente_id: locacao.cliente_id
+      Data_de_Início: locacao.data_inicio,
+      Data_de_Fim: locacao.data_fim,
+      Cancelada: locacao.cancelada,
+      Cliente_id: locacao.cliente_id
     }
   end
 end

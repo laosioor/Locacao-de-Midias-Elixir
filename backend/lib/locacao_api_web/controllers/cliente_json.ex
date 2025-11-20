@@ -18,16 +18,16 @@ defmodule LocacaoApiWeb.ClienteJSON do
   def data(%Cliente{} = cliente) do
     %{
       id: cliente.id,
-      nome: cliente.nome,
-      sobrenome: cliente.sobrenome,
-      data_nascimento: cliente.data_nascimento,
-      cpf: cliente.cpf,
-      email: cliente.email,
-      logradouro: cliente.logradouro,
-      numero: cliente.numero,
-      bairro: cliente.bairro,
-      cep: cliente.cep,
-      cidade_id: cliente.cidade_id
+      Nome: cliente.nome,
+      Sobrenome: cliente.sobrenome,
+      Data_de_Nascimento: cliente.data_nascimento,
+      CPF: cliente.cpf,
+      Email: cliente.email,
+      Logradouro: cliente.logradouro,
+      Número: cliente.numero,
+      Bairro: cliente.bairro,
+      CEP: cliente.cep,
+      Cidade_id: cliente.cidade_id
     }
   end
 end

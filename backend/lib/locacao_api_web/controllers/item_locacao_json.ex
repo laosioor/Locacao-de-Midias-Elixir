@@ -17,9 +17,9 @@ defmodule LocacaoApiWeb.ItemLocacaoJSON do
 
   def data(%ItemLocacao{} = item) do
     %{
-      valor: item.valor,
-      locacao_id: item.locacao_id,
-      exemplar_codigo_interno: item.exemplar_codigo_interno
+      Valor: item.valor,
+      Locacão_id: item.locacao_id,
+      Exemplar_Código_Interno: item.exemplar_codigo_interno
     }
   end
 end

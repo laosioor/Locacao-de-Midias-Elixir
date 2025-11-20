@@ -18,8 +18,8 @@ defmodule LocacaoApiWeb.CidadeJSON do
   def data(%Cidade{} = cidade) do
     %{
       id: cidade.id,
-      nome: cidade.nome,
-      estado_id: cidade.estado_id
+      Nome: cidade.nome,
+      Estado_id: cidade.estado_id
     }
   end
 end

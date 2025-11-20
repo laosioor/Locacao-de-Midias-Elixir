@@ -18,9 +18,9 @@ defmodule LocacaoApiWeb.ExemplarJSON do
 
   def data(%Exemplar{} = exemplar) do
     %{
-      codigo_interno: exemplar.codigo_interno,
-      disponivel: exemplar.disponivel,
-      midia_id: exemplar.midia_id
+      Código_Interno: exemplar.codigo_interno,
+      Disponível: exemplar.disponivel,
+      Mídia_id: exemplar.midia_id
     }
   end
 end

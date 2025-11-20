@@ -18,7 +18,7 @@ defmodule LocacaoApiWeb.ClassificacaoEtariaJSON do
   def data(%ClassificacaoEtaria{} = classificacao_etaria) do
     %{
       id: classificacao_etaria.id,
-      descricao: classificacao_etaria.descricao
+      Descrição: classificacao_etaria.descricao
     }
   end
 end

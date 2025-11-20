@@ -18,16 +18,16 @@ defmodule LocacaoApiWeb.MidiaJSON do
   def data(%Midia{} = midia) do
     %{
       id: midia.id,
-      titulo: midia.titulo,
-      ano_lancamento: midia.ano_lancamento,
-      codigo_barras: midia.codigo_barras,
-      duracao_em_minutos: midia.duracao_em_minutos,
-      ator_principal_id: midia.ator_principal,
-      ator_coadjuvante_id: midia.ator_coadjuvante,
-      genero_id: midia.genero_id,
-      tipo_id: midia.tipo_id,
-      classificacao_etaria_id: midia.classificacao_etaria_id,
-      classificacao_interna_id: midia.classificacao_interna_id
+      Título: midia.titulo,
+      Ano_de_Lançamento: midia.ano_lancamento,
+      Código_de_Barras: midia.codigo_barras,
+      Duração_em_Minutos: midia.duracao_em_minutos,
+      Ator_Principal_id: midia.ator_principal,
+      Ator_Coadjuvante_id: midia.ator_coadjuvante,
+      Gênero_id: midia.genero_id,
+      Tipo_id: midia.tipo_id,
+      Classificação_Etária_id: midia.classificacao_etaria_id,
+      Classificação_Interna_id: midia.classificacao_interna_id
     }
   end
 end

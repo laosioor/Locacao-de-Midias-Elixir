@@ -18,8 +18,8 @@ defmodule LocacaoApiWeb.ClassificacaoInternaJSON do
   def data(%ClassificacaoInterna{} = classificacao_interna) do
     %{
       id: classificacao_interna.id,
-      descricao: classificacao_interna.descricao,
-      valor_aluguel: classificacao_interna.valor_aluguel
+      Descrição: classificacao_interna.descricao,
+      Valor_de_Aluguel: classificacao_interna.valor_aluguel
     }
   end
 end

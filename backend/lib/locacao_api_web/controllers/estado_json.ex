@@ -18,8 +18,8 @@ defmodule LocacaoApiWeb.EstadoJSON do
   def data(%Estado{} = estado) do
     %{
       id: estado.id,
-      nome: estado.nome,
-      sigla: estado.sigla
+      Nome: estado.nome,
+      Sigla: estado.sigla
     }
   end
 end

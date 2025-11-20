@@ -18,7 +18,7 @@ defmodule LocacaoApiWeb.TipoJSON do
   def data(%Tipo{} = tipo) do
     %{
       id: tipo.id,
-      descricao: tipo.descricao
+      Descrição: tipo.descricao
     }
   end
 end
