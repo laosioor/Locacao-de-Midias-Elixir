@@ -12,17 +12,17 @@ const router = createRouter({
 			path: "/atores",
 			name: "atores",
 			component: () => import("../views/atores.vue"),
-		}, 
+		},
 		{
-			path: "/classificacoes",
-			name: "classificacoes",
-			component: () => import("../views/classificacoes.vue"),
-		}, 
+			path: "/classificacoesEtarias",
+			name: "classificacoesEtarias",
+			component: () => import("../views/classificacoesEtarias.vue"),
+		},
 		{
 			path: "/midias",
 			name: "midias",
 			component: () => import("../views/midias.vue"),
-		}, 
+		},
 		{
 			path: "/generos",
 			name: "generos",
