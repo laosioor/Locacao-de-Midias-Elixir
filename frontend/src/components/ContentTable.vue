@@ -87,13 +87,6 @@ onMounted(fetchData);
 	<div v-if="error">{{ error }}</div>
 	<div v-else-if="loading">Carregando Informações...</div>
 
->
-
-		<table>
-	<div v-else>
-			<RouterLink class="btn-novo" :to="`/${props.baseRoute}/novo`"
-				>Inserir Novo</RouterLink
-		</div>
 		<table class="tabela-listagem">
 			<thead>
 				<tr>
