@@ -26,7 +26,7 @@ defmodule LocacaoApiWeb.MidiaController do
     render(conn, :show, midia: midia)
   end
 
-  def update(conn, %{"id" => id} = midia_params}) do
+  def update(conn, %{"id" => id} = midia_params) do
     midia = Midias.get_midia!(id)
 
     atributos_limpos = normalizar_params(midia_params)
