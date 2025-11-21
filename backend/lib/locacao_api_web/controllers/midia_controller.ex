@@ -12,7 +12,8 @@ defmodule LocacaoApiWeb.MidiaController do
   end
 
   def create(conn, %{"midia" => midia_params}) do
-    with {:ok, %Midia{} = midia} <- Midias.create_midia(midia_params) do
+    atributos_limpos = normalizar_params(midia_params)
+    with {:ok, %Midia{} = midia} <- Midias.create_midia(atributos_limpos) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/midia/#{midia}")
@@ -28,7 +29,9 @@ defmodule LocacaoApiWeb.MidiaController do
   def update(conn, %{"id" => id, "midia" => midia_params}) do
     midia = Midias.get_midia!(id)
 
-    with {:ok, %Midia{} = midia} <- Midias.update_midia(midia, midia_params) do
+    atributos_limpos = normalizar_params(midia_params)
+
+    with {:ok, %Midia{} = midia} <- Midias.update_midia(midia, atributos_limpos) do
       render(conn, :show, midia: midia)
     end
   end
@@ -39,5 +42,22 @@ defmodule LocacaoApiWeb.MidiaController do
     with {:ok, %Midia{}} <- Midias.delete_midia(midia) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  defp normalizar_params(params) do
+    %{
+      "titulo" => params["Título"],
+      "ano_lancamento" => params["Ano_de_Lançamento"],
+      "codigo_barras" => params["Código_de_Barras"],
+      "duracao_em_minutos" => params["Duração_em_Minutos"],
+      "ator_principal" => params["Ator_Principal_id"],
+      "ator_coadjuvante" => params["Ator_Coadjuvante_id"],
+      "genero_id" => params["Gênero_id"],
+      "tipo_id" => params["Tipo_id"],
+      "classificacao_etaria_id" => params["Classificação_Etária_id"],
+      "classificacao_interna_id" => params["Classificação_Interna_id"]
+    }
+    |> Enum.reject(fn {_, v} -> is_nil(v) end)
+    |> Map.new()
   end
 end
