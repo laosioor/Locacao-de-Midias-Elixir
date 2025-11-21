@@ -14,14 +14,19 @@ const currentId = computed(() => route.params.id);
 
 const formFields = [
 	{ name: "Título", label: "Título", type: "text", required: true },
-	{ name: "Ano_Lançamento", label: "Ano", type: "number", required: true },
+	{ name: "Ano_de_Lançamento", label: "Ano", type: "number", required: true },
 	{
 		name: "Duração_em_Minutos",
 		label: "Duração (min)",
 		type: "number",
 		required: true,
 	},
-	{ name: "Código_de_Barras", label: "Cód. Barras", type: "text", required: true },
+	{
+		name: "Código_de_Barras",
+		label: "Cód. Barras",
+		type: "text",
+		required: true,
+	},
 	{
 		name: "Gênero_id",
 		label: "Gênero",
@@ -73,18 +78,18 @@ const formFields = [
 ];
 
 const tableRelations = {
-	genero_id: { endpoint: "generos", field: "Descrição" },
-	classificacao_etaria_id: {
+	Gênero_id: { endpoint: "generos", field: "Descrição" },
+	Classificação_Etária_id: {
 		endpoint: "classificacoes_etarias",
 		field: "Descrição",
 	},
-	tipo_id: { endpoint: "tipos", field: "Descrição" },
-	classificacao_interna_id: {
+	Tipo_id: { endpoint: "tipos", field: "Descrição" },
+	Classificação_Interna_id: {
 		endpoint: "classificacoes_internas",
 		field: "Descrição",
 	},
-	ator_principal_id: { endpoint: "atores", field: ["Nome", "Sobrenome"] },
-	ator_coadjuvante_id: { endpoint: "atores", field: ["Nome", "Sobrenome"] },
+	Ator_Principal_id: { endpoint: "atores", field: ["Nome", "Sobrenome"] },
+	Ator_Coadjuvante_id: { endpoint: "atores", field: ["Nome", "Sobrenome"] },
 };
 </script>
 

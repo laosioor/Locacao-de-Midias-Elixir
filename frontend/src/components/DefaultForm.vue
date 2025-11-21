@@ -37,8 +37,15 @@ onMounted(async () => {
 		for (const field of props.fields) {
 			if (field.type === "select" && field.endpoint) {
 				const res = await axios.get(API_URL + field.endpoint);
-				options[field.name] = res.data.data;
+				selectOpts[field.name] = res.data.data;
 			}
+		}
+
+		if (props.id) {
+			const url = `${API_URL}${props.endpoint}/${props.id}`;
+			const response = await axios.get(url);
+
+			Object.assign(formData, response.data.data || response.data);
 		}
 	} catch (e) {
 		eMessage.value = "Erro ao carregar formulario: " + e.message;
@@ -51,6 +58,7 @@ onMounted(async () => {
 const salvar = async () => {
 	try {
 		if (props.id) {
+			console.table(formData);
 			await axios.put(`${API_URL}${props.endpoint}/${props.id}`, formData);
 			alert("Atualizado com sucesso!");
 		} else {
@@ -59,7 +67,7 @@ const salvar = async () => {
 		}
 		router.back();
 	} catch (e) {
-		eMessage("Erro ao salvar:	" + e.message);
+		eMessage.value = "Erro ao salvar:	" + e.message;
 		console.error(e);
 	}
 };
@@ -69,7 +77,7 @@ const salvar = async () => {
 		<h1>{{ props.id ? "Editar" : "Novo" }} {{ titulo }}</h1>
 
 		<div v-if="loading">Carregando...</div>
-		<div v-if="errorMessage" class="alerta-erro">{{ errorMessage }}</div>
+		<div v-if="eMessage" class="alerta-erro">{{ eMessage }}</div>
 		<form v-else @submit.prevent="salvar" class="form-cadastro">
 			<div v-for="field in props.fields" :key="field.name" class="form-group">
 				<label :for="field.name">{{ field.label }}:</label>
@@ -89,16 +97,78 @@ const salvar = async () => {
 					:required="field.required"
 				>
 					<option value="" disabled>Selecione...</option>
-					<option v-for="opt in opts[field.name]" :key="opt.id" :value="opt.id">
-						{{ getOptLabel(opt, field) }}
-					</option>
+					<template v-if="selectOpts[field.name]">
+						<option
+							v-for="opt in selectOpts[field.name]"
+							:key="opt.id"
+							:value="opt.id"
+						>
+							{{ getOptLabel(opt, field) }}
+						</option>
+					</template>
 				</select>
 			</div>
 
-			<div>
-				<button class="btn-voltar" @click="router.back()">Voltar</button>
+			<div class="botoes-form">
+				<button type="button" class="btn-voltar" @click="router.back()">
+					Voltar
+				</button>
 				<button class="btn-salvar" type="submit">Salvar</button>
 			</div>
 		</form>
 	</div>
 </template>
+
+<style scoped>
+.content-form {
+	background-color: var(--rp-surface);
+	padding: 40px;
+	border-radius: 8px;
+	max-width: 600px;
+	margin: 0 auto;
+}
+.form-group {
+	margin-bottom: 20px;
+}
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: bold;
+}
+input,
+select {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid var(--rp-muted);
+	border-radius: 4px;
+	background-color: var(--rp-overlay);
+	color: var(--rp-text);
+}
+.botoes-form {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+.alerta-erro {
+	color: red;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+.btn-salvar {
+	background-color: var(--rp-foam);
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+}
+.btn-voltar {
+	background: transparent;
+	border: 1px solid var(--rp-muted);
+	color: var(--rp-muted);
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
