@@ -23,12 +23,46 @@ const initForm = () => {
 	});
 };
 
+const getOptId = (opt) => {
+	return opt.id || opt.Código_Interno || opt.codigo_interno;
+};
+
 const getOptLabel = (option, fieldConfig) => {
+	if (typeof fieldConfig.display === 'function') {
+		return fieldConfig.display(option);
+	}
+
 	const keys = Array.isArray(fieldConfig.display) ? fieldConfig.display : [fieldConfig.display];
 
-	return keys.map(k => {
-		return k.split('.').reduce((o, i) => o?.[i], option) || option[k];
-	}).join(" - ");
+	return keys.map(key => {
+		return key.split('.').reduce((obj, k) => (obj && obj[k] !== undefined) ? obj[k] : '', option);
+	})
+		.filter(v => v !== '')
+		.join(fieldConfig.separator || " ");
+};
+
+const getFilteredOptions = (field) => {
+	const options = selectOpts[field.name];
+	if (!options) return [];
+
+	if (!field.filter) return options;
+
+	return options.filter(opt => {
+		const optId = getOptId(opt);
+		const isSelected = formData[field.name] == optId;
+		return field.filter(opt) || isSelected;
+	});
+};
+
+const handleSelectChange = (event, field) => {
+	if (field.onChange && selectOpts[field.name]) {
+		const selectedVal = formData[field.name];
+		const selectedOption = selectOpts[field.name].find(opt => getOptId(opt) == selectedVal);
+
+		if (selectedOption) {
+			field.onChange(selectedOption, formData);
+		}
+	}
 };
 
 onMounted(async () => {
@@ -38,20 +72,7 @@ onMounted(async () => {
 		for (const field of props.fields) {
 			if (field.type === "select" && field.endpoint) {
 				const res = await axios.get(API_URL + field.endpoint);
-				let options = res.data.data;
-
-				if (field.relation_endpoint && field.relation_key) {
-					const resRel = await axios.get(API_URL + field.relation_endpoint);
-					const relations = resRel.data.data;
-
-					options = options.map(opt => {
-						const related = relations.find(r => r.id === opt[field.relation_key]);
-
-						return { ...opt, [field.relation_aux_name]: related };
-					});
-				}
-
-				selectOpts[field.name] = options;
+				selectOpts[field.name] = res.data.data;
 			}
 		}
 
@@ -61,7 +82,7 @@ onMounted(async () => {
 			Object.assign(formData, response.data.data || response.data);
 		}
 	} catch (e) {
-		eMessage.value = "Erro ao carregar: " + e.message;
+		eMessage.value = "Erro: " + (e.response?.data?.message || e.message);
 		console.error(e);
 	} finally {
 		loading.value = false;
@@ -71,7 +92,6 @@ onMounted(async () => {
 const salvar = async () => {
 	try {
 		const payload = { ...formData };
-
 		if (props.id) {
 			await axios.put(`${API_URL}${props.endpoint}/${props.id}`, payload);
 			alert("Atualizado com sucesso!");
@@ -81,8 +101,7 @@ const salvar = async () => {
 		}
 		router.back();
 	} catch (e) {
-		eMessage.value = "Erro ao salvar: " + e.message;
-		console.error(e);
+		eMessage.value = "Erro ao salvar: " + (e.response?.data?.message || e.message);
 	}
 };
 </script>
@@ -93,6 +112,7 @@ const salvar = async () => {
 
 		<div v-if="loading">Carregando...</div>
 		<div v-if="eMessage" class="alerta-erro">{{ eMessage }}</div>
+
 		<form v-else @submit.prevent="salvar" class="form-cadastro">
 			<div v-for="field in props.fields" :key="field.name" class="form-group">
 				<label :for="field.name">{{ field.label }}:</label>
@@ -106,11 +126,10 @@ const salvar = async () => {
 				</div>
 
 				<select v-if="field.type === 'select'" :id="field.name" v-model="formData[field.name]"
-					:required="field.required">
+					:required="field.required" @change="handleSelectChange($event, field)">
 					<option value="" disabled>Selecione...</option>
 					<template v-if="selectOpts[field.name]">
-						<option v-for="opt in selectOpts[field.name]" :key="opt.id || opt.codigo_interno"
-							:value="opt.id || opt.codigo_interno">
+						<option v-for="opt in getFilteredOptions(field)" :key="getOptId(opt)" :value="getOptId(opt)">
 							{{ getOptLabel(opt, field) }}
 						</option>
 					</template>

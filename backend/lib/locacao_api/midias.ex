@@ -596,7 +596,9 @@ defmodule LocacaoApi.Midias do
 
   """
   def list_exemplar do
-    Repo.all(Exemplar)
+    Exemplar
+    |> Repo.all()
+    |> Repo.preload(midia: :classificacao_interna)
   end
 
   @doc """

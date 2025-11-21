@@ -7,15 +7,10 @@ defmodule LocacaoApi.Locacoes do
   alias LocacaoApi.Repo
 
   alias LocacaoApi.Locacoes.Locacao
+  alias LocacaoApi.Midias
 
   @doc """
   Returns the list of locacao.
-
-  ## Examples
-
-      iex> list_locacao()
-      [%Locacao{}, ...]
-
   """
   def list_locacao do
     Repo.all(Locacao)
@@ -23,17 +18,6 @@ defmodule LocacaoApi.Locacoes do
 
   @doc """
   Gets a single locacao.
-
-  Raises `Ecto.NoResultsError` if the Locacao does not exist.
-
-  ## Examples
-
-      iex> get_locacao!(123)
-      %Locacao{}
-
-      iex> get_locacao!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_locacao!(id) do
     Repo.get!(Locacao, id)
@@ -41,64 +25,61 @@ defmodule LocacaoApi.Locacoes do
 
   @doc """
   Creates a locacao.
-
-  ## Examples
-
-      iex> create_locacao(%{field: value})
-      {:ok, %Locacao{}}
-
-      iex> create_locacao(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
-  def create_locacao(attrs) do
-    %Locacao{}
-    |> Locacao.changeset(attrs)
-    |> Repo.insert()
+  def create_locacao(attrs \\ %{}) do
+    case %Locacao{}
+         |> Locacao.changeset(attrs)
+         |> Repo.insert() do
+      {:ok, locacao} ->
+        locacao = Repo.preload(locacao, :itens_locacao)
+        item = List.first(locacao.itens_locacao)
+
+        if item do
+           LocacaoApi.Midias.get_exemplar!(item.exemplar_codigo_interno)
+           |> LocacaoApi.Midias.update_exemplar(%{disponivel: false})
+        end
+
+        {:ok, locacao}
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
 
   @doc """
   Updates a locacao.
-
-  ## Examples
-
-      iex> update_locacao(locacao, %{field: new_value})
-      {:ok, %Locacao{}}
-
-      iex> update_locacao(locacao, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def update_locacao(%Locacao{} = locacao, attrs) do
     locacao
+    |> Repo.preload(:itens_locacao)
     |> Locacao.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a locacao.
-
-  ## Examples
-
-      iex> delete_locacao(locacao)
-      {:ok, %Locacao{}}
-
-      iex> delete_locacao(locacao)
-      {:error, %Ecto.Changeset{}}
-
+  Deletes a locacao (Cancels it).
   """
   def delete_locacao(%Locacao{} = locacao) do
-    Repo.delete(locacao)
+    locacao = Repo.preload(locacao, :itens_locacao)
+
+    Repo.transaction(fn ->
+      locacao
+      |> Locacao.changeset(%{cancelada: true})
+      |> Repo.update!()
+
+      item = List.first(locacao.itens_locacao)
+
+      if item do
+         LocacaoApi.Midias.get_exemplar!(item.exemplar_codigo_interno)
+         |> LocacaoApi.Midias.update_exemplar(%{disponivel: true})
+      end
+
+      locacao
+    end)
   end
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking locacao changes.
-
-  ## Examples
-
-      iex> change_locacao(locacao)
-      %Ecto.Changeset{data: %Locacao{}}
-
   """
   def change_locacao(%Locacao{} = locacao, attrs \\ %{}) do
     Locacao.changeset(locacao, attrs)
@@ -133,6 +114,4 @@ defmodule LocacaoApi.Locacoes do
   def delete_item_locacao(%ItemLocacao{} = item_locacao) do
     Repo.delete(item_locacao)
   end
-
-  # ... (update e delete se precisar)
 end

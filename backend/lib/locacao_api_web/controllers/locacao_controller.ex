@@ -6,8 +6,12 @@ defmodule LocacaoApiWeb.LocacaoController do
 
   action_fallback(LocacaoApiWeb.FallbackController)
 
+  defp preloads do
+    [:cliente, itens_locacao: [exemplar: :midia]]
+  end
+
   def index(conn, _params) do
-    locacao = Locacoes.list_locacao()
+    locacao = Locacoes.list_locacao() |> LocacaoApi.Repo.preload(preloads())
     render(conn, :index, locacao: locacao)
   end
 
@@ -23,7 +27,7 @@ defmodule LocacaoApiWeb.LocacaoController do
   end
 
   def show(conn, %{"id" => id}) do
-    locacao = Locacoes.get_locacao!(id)
+    locacao = Locacoes.get_locacao!(id) |> LocacaoApi.Repo.preload(preloads())
     render(conn, :show, locacao: locacao)
   end
 

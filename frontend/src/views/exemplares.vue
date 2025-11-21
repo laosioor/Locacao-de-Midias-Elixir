@@ -11,6 +11,7 @@ import ContentTable from "@/components/ContentTable.vue";
 				:relations="{
 					Mídia_id: { endpoint: 'midias', field: 'Título' },
 				}"
+                :excludeColumns="['midia']"
 			/>
 		</div>
 	</main>
