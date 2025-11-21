@@ -4,10 +4,13 @@ import ContentTable from "@/components/ContentTable.vue";
 <template>
 	<main>
 		<div class="content">
-			<h1>Listagem Classificações Internas</h1>
+			<h1>Listagem Cidades</h1>
 			<ContentTable
-				endpoint="classificacoes_internas"
-				baseRoute="classificacoes_internas"
+				endpoint="cidades"
+				baseRoute="cidades"
+				:relations="{
+					Estado_id: { endpoint: 'estados', field: 'Nome' },
+				}"
 			/>
 		</div>
 	</main>

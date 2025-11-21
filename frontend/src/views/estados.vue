@@ -4,8 +4,8 @@ import ContentTable from "@/components/ContentTable.vue";
 <template>
 	<main>
 		<div class="content">
-			<h1>Listagem Gêneros</h1>
-			<ContentTable endpoint="generos" baseRoute="generos" />
+			<h1>Listagem Estados</h1>
+			<ContentTable endpoint="estados" baseRoute="estados" />
 		</div>
 	</main>
 </template>

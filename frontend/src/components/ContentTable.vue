@@ -16,7 +16,7 @@ const loading = ref(true);
 const error = ref(null);
 
 const columns = computed(() => {
-	if (!itemsList.value || itemsList.value.length === 0) {
+	if (!itemsList.value) {
 		return [];
 	}
 
@@ -49,6 +49,21 @@ const formatColumns = (columnNames) => {
 	return columnNames.replace("_id", "").replace(/_/g, " ");
 };
 
+const delItem = async (id) => {
+	if (!confirm("Tem certeza que deseja excluir este registro?")) return;
+	try {
+		const URL = API_URL + props.endpoint + "/" + id;
+		await axios.delete(URL);
+		itemsList.value.splice(
+			itemsList.value.findIndex((i) => i.id === id),
+			1,
+		);
+	} catch (error) {
+		console.error("Error deleting form row: " + error);
+		alert("Erro ao excluir item.");
+	}
+};
+
 const fetchData = async () => {
 	loading.value = true;
 	error.value = null;
@@ -72,33 +87,46 @@ onMounted(fetchData);
 <template>
 	<div v-if="error">{{ error }}</div>
 	<div v-else-if="loading">Carregando Informações...</div>
-	<table v-else class="tabela-listagem content">
-		<thead>
-			<tr>
-				<th v-for="col in columns" :key="col">
-					{{ formatColumns(col) }}
-				</th>
-				<th>Ações</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr v-for="item in itemsList" :key="item.id">
-				<td v-for="colKey in columns" :key="colKey">
-					<FkCell
-						v-if="props.relations[colKey]"
-						:id="item[colKey]"
-						:endpoint="props.relations[colKey].endpoint"
-						:field="props.relations[colKey].field"
-					/>
-					<span v-else>
-						{{ item[colKey] }}
-					</span>
-				</td>
-				<td>
-					<RouterLink to="" class="btn-alterar-form">Alterar</RouterLink>
-					<RouterLink to="" class="btn-excluir-form">Excluir</RouterLink>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div v-else class="tabela-listagem">
+		<div class="btn-novo">
+			<RouterLink to="">Inserir Novo</RouterLink>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th v-for="col in columns" :key="col">
+						{{ formatColumns(col) }}
+					</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in itemsList" :key="item.id">
+					<td v-for="colKey in columns" :key="colKey">
+						<FkCell
+							v-if="props.relations[colKey]"
+							:id="item[colKey]"
+							:endpoint="props.relations[colKey].endpoint"
+							:field="props.relations[colKey].field"
+						/>
+						<span v-else>
+							{{ item[colKey] }}
+						</span>
+					</td>
+					<td class="btn-cell">
+						<RouterLink
+							:to="`/${props.baseRoute}/alterar/${item.id}`"
+							class="btn-alterar-form"
+						>
+							Alterar
+						</RouterLink>
+
+						<button @click="delItem(item.id)" class="btn-excluir-form">
+							Excluir
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </template>

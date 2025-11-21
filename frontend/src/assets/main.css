@@ -116,7 +116,7 @@ ul {
 
 hr {
 	height: 5px;
-	margin: 3px 0 25px 0;
+	margin: 3px 0 20px 0;
 	background-color: var(--rp-love);
 	border: none;
 }
@@ -141,16 +141,16 @@ aside h1 a:hover {
 }
 
 aside li a {
-	font-size: 22px;
-	padding: 2vh 2vw;
+	font-size: 18px;
+	padding: 1vh 1vw;
 	display: flex;
 	align-items: center;
 	gap: 12px;
 }
 
 aside li a img {
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 	transition: transform 0.1s ease-in-out;
 }
 
@@ -214,12 +214,25 @@ aside li.active a img {
 .tabela-listagem tbody td a {
 	display: inline-block;
 	padding: 5px 10px;
-	margin: 2px 0;
 	border-radius: 4px;
 	font-size: 0.95rem;
 	font-weight: bold;
 	transition: background-color 0.2s ease;
 	text-decoration: none;
+}
+.tabela-listagem tbody td button {
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 0.95rem;
+	font-weight: bold;
+	transition: background-color 0.2s ease;
+	text-decoration: none;
+}
+
+.btn-cell {
+	display: flex;
+	gap: 5px;
 }
 
 .btn-alterar-form {
@@ -242,9 +255,9 @@ aside li.active a img {
 	color: var(--rp-surface);
 }
 
-.btn-novo {
+button.btn-novo {
 	background-color: var(--rp-foam);
-	color: var(--rp-surface);
+	color: var(--rp-foam);
 	text-decoration: none;
 	padding: 10px 20px;
 	border-radius: 5px;
@@ -258,6 +271,7 @@ aside li.active a img {
 
 .btn-novo:hover {
 	transform: scale(1.1);
+	color: var(--rp-surface);
 }
 
 main p {
