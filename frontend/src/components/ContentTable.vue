@@ -86,13 +86,15 @@ onMounted(fetchData);
 <template>
 	<div v-if="error">{{ error }}</div>
 	<div v-else-if="loading">Carregando Informações...</div>
-	<div v-else class="tabela-listagem">
 
-		<div class="btn-novo">
-			<RouterLink :to="`/${props.baseRoute}/novo`">Inserir Novo</RouterLink>
-		</div>
+>
 
 		<table>
+	<div v-else>
+			<RouterLink class="btn-novo" :to="`/${props.baseRoute}/novo`"
+				>Inserir Novo</RouterLink
+		</div>
+		<table class="tabela-listagem">
 			<thead>
 				<tr>
 					<th v-for="col in columns" :key="col">

@@ -243,35 +243,40 @@ aside li.active a img {
 .btn-alterar-form:hover {
 	background-color: var(--rp-pine);
 	color: var(--rp-surface);
+	transform: scale(1.1);
 }
 
 .btn-excluir-form {
 	color: var(--rp-love);
+	background-color: var(--rp-overlay);
 	border: 1px solid var(--rp-love);
 }
 
 .btn-excluir-form:hover {
 	background-color: var(--rp-love);
 	color: var(--rp-surface);
+	transform: scale(1.1);
 }
 
-button.btn-novo {
-	background-color: var(--rp-foam);
+.btn-novo {
+	background-color: var(--rp-surface);
 	color: var(--rp-foam);
+	border-color: var(--rp-foam);
 	text-decoration: none;
 	padding: 10px 20px;
 	border-radius: 5px;
+	border: 5px;
 	font-weight: bold;
 	transition: all 0.3s ease-in-out;
 	display: inline-block;
-	margin-bottom: 20px;
-	border: none;
-	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+	margin: 20px 0 20px 0;
+	align-self: center;
 }
 
 .btn-novo:hover {
 	transform: scale(1.1);
 	color: var(--rp-surface);
+	background-color: var(--rp-foam);
 }
 
 main p {
