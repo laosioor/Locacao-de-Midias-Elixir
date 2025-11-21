@@ -11,7 +11,7 @@ defmodule LocacaoApiWeb.LocacaoController do
     render(conn, :index, locacao: locacao)
   end
 
-  def create(conn, %{"locacao" => locacao_params}) do
+  def create(conn, locacao_params) do
     atributos_limpos = normalizar_params(locacao_params)
 
     with {:ok, %Locacao{} = locacao} <- Locacoes.create_locacao(atributos_limpos) do
@@ -45,12 +45,20 @@ defmodule LocacaoApiWeb.LocacaoController do
   end
 
   defp normalizar_params(params) do
-    %{
+    dados_locacao = %{
       "data_inicio" => params["Data_de_Início"],
       "data_fim" => params["Data_de_Fim"],
       "cancelada" => params["Cancelada"],
       "cliente_id" => params["Cliente_id"]
     }
+
+    dados_exemplar = %{
+      "exemplar_codigo_interno" => params["Exemplar_Código_Interno"],
+      "valor" => params["Valor"]
+    }
+
+    dados_locacao
+    |> Map.put("itens_locacao", [dados_exemplar])
     |> Enum.reject(fn {_, v} -> is_nil(v) end)
     |> Map.new()
   end

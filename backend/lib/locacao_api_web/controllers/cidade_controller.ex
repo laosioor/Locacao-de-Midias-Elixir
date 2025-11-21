@@ -29,7 +29,7 @@ defmodule LocacaoApiWeb.CidadeController do
   def update(conn, %{"id" => id} = cidade_params) do
     cidade = Cadastros.get_cidade!(id)
     atributos_limpos = normalizar_params(cidade_params)
-    with {:ok, %Cidade{} = cidade} <- Cadastros.update_cidade(cidade, cidade_params) do
+    with {:ok, %Cidade{} = cidade} <- Cadastros.update_cidade(cidade, atributos_limpos) do
       render(conn, :show, cidade: cidade)
     end
   end
