@@ -11,7 +11,7 @@ defmodule LocacaoApiWeb.MidiaController do
     render(conn, :index, midia: midia)
   end
 
-  def create(conn, %{"midia" => midia_params}) do
+  def create(conn, midia_params) do
     atributos_limpos = normalizar_params(midia_params)
     with {:ok, %Midia{} = midia} <- Midias.create_midia(atributos_limpos) do
       conn
@@ -26,7 +26,7 @@ defmodule LocacaoApiWeb.MidiaController do
     render(conn, :show, midia: midia)
   end
 
-  def update(conn, %{"id" => id, "midia" => midia_params}) do
+  def update(conn, %{"id" => id} = midia_params}) do
     midia = Midias.get_midia!(id)
 
     atributos_limpos = normalizar_params(midia_params)
