@@ -268,9 +268,8 @@ aside li.active a img {
 	border: 5px;
 	font-weight: bold;
 	transition: all 0.3s ease-in-out;
-	display: inline-block;
-	margin: 20px 0 20px 0;
-	align-self: center;
+	display: table;
+	margin: 20px auto;
 }
 
 .btn-novo:hover {

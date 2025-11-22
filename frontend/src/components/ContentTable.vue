@@ -25,11 +25,16 @@ const columns = computed(() => {
 	const allKeys = Object.keys(itemsList.value[0]);
 
 	const priorities = [
-		"id", "titulo", "nome", "sobrenome", "descricao", "sigla",
+		"id",
+		"titulo",
+		"nome",
+		"sobrenome",
+		"descricao",
+		"sigla",
 	];
 
 	return allKeys
-		.filter(key => !props.excludeColumns.includes(key))
+		.filter((key) => !props.excludeColumns.includes(key))
 		.sort((a, b) => {
 			const indexA = priorities.indexOf(a);
 			const indexB = priorities.indexOf(b);
@@ -55,7 +60,10 @@ const delItem = async (id) => {
 		if (props.deleteLabel === "Cancelar") {
 			await fetchData();
 		} else {
-			itemsList.value.splice(itemsList.value.findIndex((i) => i.id === id), 1);
+			itemsList.value.splice(
+				itemsList.value.findIndex((i) => i.id === id),
+				1,
+			);
 		}
 	} catch (error) {
 		console.error("Error: " + error);
@@ -86,7 +94,10 @@ onMounted(fetchData);
 <template>
 	<div v-if="error">{{ error }}</div>
 	<div v-else-if="loading">Carregando Informações...</div>
-
+	<div v-else>
+		<RouterLink class="btn-novo" :to="`/${props.baseRoute}/novo`"
+			>Inserir Novo</RouterLink
+		>
 		<table class="tabela-listagem">
 			<thead>
 				<tr>
@@ -99,11 +110,15 @@ onMounted(fetchData);
 			<tbody>
 				<tr v-for="item in itemsList" :key="item.id">
 					<td v-for="colKey in columns" :key="colKey">
-						<FkCell v-if="props.relations[colKey]" :id="item[colKey]"
-							:endpoint="props.relations[colKey].endpoint" :field="props.relations[colKey].field" />
+						<FkCell
+							v-if="props.relations[colKey]"
+							:id="item[colKey]"
+							:endpoint="props.relations[colKey].endpoint"
+							:field="props.relations[colKey].field"
+						/>
 
 						<span v-else-if="typeof item[colKey] === 'boolean'">
-							{{ item[colKey] ? 'Sim' : 'Não' }}
+							{{ item[colKey] ? "Sim" : "Não" }}
 						</span>
 
 						<span v-else>
@@ -113,16 +128,19 @@ onMounted(fetchData);
 
 					<td class="btn-cell">
 						<template v-if="!item.Cancelada">
-							<RouterLink :to="`/${props.baseRoute}/alterar/${item.id}`" class="btn-alterar-form">
+							<RouterLink
+								:to="`/${props.baseRoute}/alterar/${item.id}`"
+								class="btn-alterar-form"
+							>
 								Alterar
 							</RouterLink>
 
 							<button @click="delItem(item.id)" class="btn-excluir-form">
-								{{ props.deleteLabel || 'Excluir' }}
+								{{ props.deleteLabel || "Excluir" }}
 							</button>
 						</template>
 
-						<span v-else style="color: red; font-weight: bold;">
+						<span v-else style="color: red; font-weight: bold">
 							Cancelado
 						</span>
 					</td>
