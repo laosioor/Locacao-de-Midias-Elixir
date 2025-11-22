@@ -49,11 +49,11 @@ const router = createRouter({
 			component: () => import("../views/classificacoesEtarias.vue"),
 		},
 		{
-			path: "/classificacoesEtarias/novo",
+			path: "/classificacoes_etarias/novo",
 			component: () => import("../views/classificacoesEtarias.vue"),
 		},
 		{
-			path: "/classificacoesEtarias/alterar/:id",
+			path: "/classificacoes_etarias/alterar/:id",
 			component: () => import("../views/classificacoesEtarias.vue"),
 		},
 		{
@@ -109,11 +109,11 @@ const router = createRouter({
 			component: () => import("../views/classificacoesInternas.vue"),
 		},
 		{
-			path: "/classificacoesInternas/novo",
+			path: "/classificacoes_internas/novo",
 			component: () => import("../views/classificacoesInternas.vue"),
 		},
 		{
-			path: "/classificacoesInternas/alterar/:id",
+			path: "/classificacoes_internas/alterar/:id",
 			component: () => import("../views/classificacoesInternas.vue"),
 		},
 		{

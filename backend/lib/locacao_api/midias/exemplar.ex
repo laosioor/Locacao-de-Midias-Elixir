@@ -5,6 +5,8 @@ defmodule LocacaoApi.Midias.Exemplar do
   alias LocacaoApi.Midias.Midia
   alias LocacaoApi.Locacoes.ItemLocacao
 
+  @derive {Phoenix.Param, key: :codigo_interno}
+
   @primary_key {:codigo_interno, :id, autogenerate: true}
   schema "exemplar" do
     field :disponivel, :boolean, default: false
@@ -17,8 +19,8 @@ defmodule LocacaoApi.Midias.Exemplar do
   @doc false
   def changeset(exemplar, attrs) do
     exemplar
-    |> cast(attrs, [:codigo_interno, :disponivel, :midia_id])
-    |> validate_required([:codigo_interno, :disponivel, :midia_id])
+    |> cast(attrs, [:disponivel, :midia_id])
+    |> validate_required([:disponivel, :midia_id])
     |> assoc_constraint(:midia)
   end
 end

@@ -24,7 +24,7 @@ const initForm = () => {
 };
 
 const getOptId = (opt) => {
-	return opt.id || opt.Código_Interno || opt.codigo_interno;
+	return opt.id || opt.Código_Interno;
 };
 
 const getOptLabel = (option, fieldConfig) => {
