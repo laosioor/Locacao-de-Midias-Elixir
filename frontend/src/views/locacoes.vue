@@ -24,28 +24,34 @@ const formFields = [
 		required: true,
 	},
 	{
-		name: "Exemplar_Código_Interno",
-		label: "Filme (Exemplar)",
-		type: "select",
-		endpoint: "exemplares",
-		display: ["midia.Título", "Código_Interno"],
-		separator: " - ",
-		required: true,
-		filter: (opt) => opt.Disponível === true,
-		onChange: (option, form) => {
-            const valor = option?.midia?.Classificação_Interna?.Valor;
-            
-            if (valor) {
-                form.Valor = valor;
+        name: "Itens",
+        label: "Filmes Alugados",
+        type: "list",
+        required: true,
+        subFields: [
+            {
+                name: "Exemplar_Código_Interno",
+                label: "Filme",
+                type: "select",
+                endpoint: "exemplares",
+                display: (opt) => `${opt.midia?.Título} - (Cód: ${opt.Código_Interno})`,
+                
+                filter: (opt) => opt.Disponível === true || opt.disponivel === true,
+                
+                onChange: (option, rowItem) => {
+                     const valor = option?.midia?.Classificação_Interna?.Valor;
+                     if (valor) rowItem.Valor = valor;
+                }
+            },
+            {
+                name: "Valor",
+                label: "Preço (R$)",
+                type: "number",
+				required: true,
+				disabled: true
             }
-        }
-	},
-	{
-		name: "Valor",
-		label: "Valor Total (R$)",
-		type: "number",
-		required: true,
-	},
+        ]
+    },
 ];
 
 const tableRelations = {
@@ -61,9 +67,15 @@ const tableRelations = {
 			</div>
 
 			<div v-else>
-				<h1>Listagem Locações</h1>
-				<ContentTable endpoint="locacoes" baseRoute="locacoes" :relations="tableRelations" deleteLabel="Cancelar" :excludeColumns="['Cliente_id', 'Exemplar_Código_Interno']"/>
-			</div>
+                <h1>Listagem Locações</h1>
+                <ContentTable
+                    endpoint="locacoes"
+                    baseRoute="locacoes"
+                    :relations="tableRelations"
+                    deleteLabel="Cancelar"
+                    :excludeColumns="['Cliente_id', 'Itens', 'Cancelada']"
+                />
+            </div>
 		</div>
 	</main>
 </template>

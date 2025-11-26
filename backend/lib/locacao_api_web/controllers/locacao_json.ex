@@ -10,18 +10,21 @@ defmodule LocacaoApiWeb.LocacaoJSON do
   end
 
   def data(%Locacao{} = locacao) do
-    raw_item = Map.get(locacao, :itens_locacao) || Map.get(locacao, :item_locacao)
+    itens = locacao.itens_locacao || []
 
-    item = cond do
-      !Ecto.assoc_loaded?(raw_item) -> nil
+    nomes_filmes =
+      itens
+      |> Enum.map(fn item ->
+        if Ecto.assoc_loaded?(item.exemplar) && Ecto.assoc_loaded?(item.exemplar.midia) do
+          "#{item.exemplar.midia.titulo} (Cód: #{item.exemplar.codigo_interno})"
+        else
+          "erro"
+        end
+      end)
+      |> Enum.join(", ")
 
-      is_list(raw_item) -> List.first(raw_item)
+    valor_total = Enum.reduce(itens, Decimal.new("0.00"), fn i, acc -> Decimal.add(acc, i.valor) end)
 
-      true -> nil
-    end
-
-    exemplar = if item && Ecto.assoc_loaded?(item.exemplar), do: item.exemplar, else: nil
-    midia = if exemplar && Ecto.assoc_loaded?(exemplar.midia), do: exemplar.midia, else: nil
     cliente = if Ecto.assoc_loaded?(locacao.cliente), do: locacao.cliente, else: nil
 
     %{
@@ -31,11 +34,15 @@ defmodule LocacaoApiWeb.LocacaoJSON do
       Cancelada: locacao.cancelada,
 
       Cliente_id: locacao.cliente_id,
-      Exemplar_Código_Interno: if(item, do: item.exemplar_codigo_interno, else: nil),
-      Valor: if(item, do: item.valor, else: nil),
+      Filmes: nomes_filmes,
+      Valor_Total: valor_total,
 
-      Cliente: if(cliente, do: "#{cliente.nome} #{cliente.sobrenome}", else: "Carregando..."),
-      Filme: if(midia, do: "#{midia.titulo} (Cód: #{exemplar.codigo_interno})", else: "N/A")
+      Itens: Enum.map(itens, fn i ->
+        %{
+          Exemplar_Código_Interno: i.exemplar_codigo_interno,
+          Valor: i.valor
+        }
+      end)
     }
   end
 end

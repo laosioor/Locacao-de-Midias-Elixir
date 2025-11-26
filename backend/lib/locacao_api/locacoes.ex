@@ -32,17 +32,14 @@ defmodule LocacaoApi.Locacoes do
          |> Repo.insert() do
       {:ok, locacao} ->
         locacao = Repo.preload(locacao, :itens_locacao)
-        item = List.first(locacao.itens_locacao)
 
-        if item do
-           LocacaoApi.Midias.get_exemplar!(item.exemplar_codigo_interno)
-           |> LocacaoApi.Midias.update_exemplar(%{disponivel: false})
-        end
+        Enum.each(locacao.itens_locacao, fn item ->
+          Midias.get_exemplar!(item.exemplar_codigo_interno)
+          |> Midias.update_exemplar(%{disponivel: false})
+        end)
 
         {:ok, locacao}
-
-      {:error, changeset} ->
-        {:error, changeset}
+      {:error, changeset} -> {:error, changeset}
     end
   end
 
@@ -57,7 +54,7 @@ defmodule LocacaoApi.Locacoes do
   end
 
   @doc """
-  Deletes a locacao (Cancels it).
+  Deletes a locacao (Cancela, nesse caso).
   """
   def delete_locacao(%Locacao{} = locacao) do
     locacao = Repo.preload(locacao, :itens_locacao)
@@ -67,12 +64,10 @@ defmodule LocacaoApi.Locacoes do
       |> Locacao.changeset(%{cancelada: true})
       |> Repo.update!()
 
-      item = List.first(locacao.itens_locacao)
-
-      if item do
-         LocacaoApi.Midias.get_exemplar!(item.exemplar_codigo_interno)
-         |> LocacaoApi.Midias.update_exemplar(%{disponivel: true})
-      end
+      Enum.each(locacao.itens_locacao, fn item ->
+          Midias.get_exemplar!(item.exemplar_codigo_interno)
+          |> Midias.update_exemplar(%{disponivel: true})
+        end)
 
       locacao
     end)

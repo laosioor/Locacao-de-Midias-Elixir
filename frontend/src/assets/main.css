@@ -205,6 +205,7 @@ aside li.active a img {
 	padding: 5px 10px;
 	border-bottom: 1px solid var(--rp-highlight-med);
 	text-align: center;
+	vertical-align: middle;
 }
 
 .tabela-listagem tbody tr:hover {
@@ -219,6 +220,7 @@ aside li.active a img {
 	font-weight: bold;
 	transition: background-color 0.2s ease;
 	text-decoration: none;
+	
 }
 .tabela-listagem tbody td button {
 	display: inline-block;
@@ -231,8 +233,20 @@ aside li.active a img {
 }
 
 .btn-cell {
-	display: flex;
-	gap: 5px;
+	white-space: nowrap;
+	
+}
+
+.btn-cell a,
+.btn-cell button,
+.btn-cell span {
+	
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.btn-cell .btn-alterar-form {
+	margin-right: 10px;
 }
 
 .btn-alterar-form {
@@ -244,6 +258,7 @@ aside li.active a img {
 	background-color: var(--rp-pine);
 	color: var(--rp-surface);
 	transform: scale(1.1);
+	cursor: pointer;
 }
 
 .btn-excluir-form {
@@ -256,6 +271,7 @@ aside li.active a img {
 	background-color: var(--rp-love);
 	color: var(--rp-surface);
 	transform: scale(1.1);
+	cursor: pointer;
 }
 
 .btn-novo {
@@ -265,7 +281,7 @@ aside li.active a img {
 	text-decoration: none;
 	padding: 10px 20px;
 	border-radius: 5px;
-	border: 5px;
+	border: 2px solid var(--rp-foam);
 	font-weight: bold;
 	transition: all 0.3s ease-in-out;
 	display: table;

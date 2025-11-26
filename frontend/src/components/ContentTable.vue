@@ -70,6 +70,19 @@ const delItem = async (id) => {
     }
 };
 
+const formatValue = (value) => {
+    if (typeof value === 'boolean') {
+        return value ? "Sim" : "Não";
+    }
+
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        const [year, month, day] = value.split('-');
+        return `${day}/${month}/${year}`;
+    }
+
+    return value;
+};
+
 const fetchData = async () => {
     loading.value = true;
     error.value = null;
@@ -98,27 +111,16 @@ onMounted(fetchData);
             <thead>
                 <tr>
                     <th v-for="col in columns" :key="col">
-                        {{ formatColumns(col) }}
+                        {{ formatColumns(col)}}
                     </th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in itemsList" :key="getItemId(item)">
-                    <td v-for="colKey in columns" :key="colKey">
-                        <FkCell
-                            v-if="props.relations[colKey]"
-                            :id="item[colKey]"
-                            :endpoint="props.relations[colKey].endpoint"
-                            :field="props.relations[colKey].field"
-                        />
-
-                        <span v-else-if="typeof item[colKey] === 'boolean'">
-                            {{ item[colKey] ? "Sim" : "Não" }}
-                        </span>
-
-                        <span v-else>
-                            {{ item[colKey] }}
+                    <td v-for="col in columns" :key="col">
+                        <span>
+                            {{ formatValue(item[col]) }}
                         </span>
                     </td>
 

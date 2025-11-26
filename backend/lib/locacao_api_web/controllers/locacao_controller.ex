@@ -56,13 +56,17 @@ defmodule LocacaoApiWeb.LocacaoController do
       "cliente_id" => params["Cliente_id"]
     }
 
-    dados_exemplar = %{
-      "exemplar_codigo_interno" => params["Exemplar_Código_Interno"],
-      "valor" => params["Valor"]
-    }
+    itens = params["Itens"] || []
+
+    itens_formatados = Enum.map(itens, fn item ->
+      %{
+      "exemplar_codigo_interno" => item["Exemplar_Código_Interno"],
+      "valor" => item["Valor"]
+      }
+    end)
 
     dados_locacao
-    |> Map.put("itens_locacao", [dados_exemplar])
+    |> Map.put("itens_locacao", itens_formatados)
     |> Enum.reject(fn {_, v} -> is_nil(v) end)
     |> Map.new()
   end
