@@ -23,7 +23,7 @@ defmodule LocacaoApiWeb.LocacaoJSON do
       end)
       |> Enum.join(", ")
 
-    valor_total = Enum.reduce(itens, Decimal.new("0.00"), fn i, acc -> Decimal.add(acc, i.valor) end)
+    valor_total = Enum.reduce(itens, Decimal.new("0.00"), fn i, total -> Decimal.add(total, i.valor) end)
 
     cliente = if Ecto.assoc_loaded?(locacao.cliente), do: locacao.cliente, else: nil
 

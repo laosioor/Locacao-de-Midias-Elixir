@@ -79,6 +79,11 @@ const formatValue = (value) => {
         const [year, month, day] = value.split('-');
         return `${day}/${month}/${year}`;
     }
+    else if (typeof value === 'string') {
+        value = value.replaceAll(',', ',<br>');
+    }
+
+    
 
     return value;
 };
@@ -119,9 +124,7 @@ onMounted(fetchData);
             <tbody>
                 <tr v-for="item in itemsList" :key="getItemId(item)">
                     <td v-for="col in columns" :key="col">
-                        <span>
-                            {{ formatValue(item[col]) }}
-                        </span>
+                            <span v-html="formatValue(item[col])"></span>
                     </td>
 
                     <td class="btn-cell">

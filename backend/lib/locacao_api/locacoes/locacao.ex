@@ -6,13 +6,13 @@ defmodule LocacaoApi.Locacoes.Locacao do
   alias LocacaoApi.Locacoes.ItemLocacao
 
   schema "locacao" do
-    field :data_inicio, :date
-    field :data_fim, :date
-    field :cancelada, :boolean, default: false
+    field(:data_inicio, :date)
+    field(:data_fim, :date)
+    field(:cancelada, :boolean, default: false)
 
-    belongs_to :cliente, Cliente, foreign_key: :cliente_id
+    belongs_to(:cliente, Cliente, foreign_key: :cliente_id)
 
-    has_many :itens_locacao, ItemLocacao, on_replace: :delete
+    has_many(:itens_locacao, ItemLocacao, on_replace: :delete)
   end
 
   @doc false
